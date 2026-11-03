@@ -8,6 +8,18 @@ Extension Chrome / Brave (Manifest V3) qui ajoute un bouton « Marquer comme vue
 
 Un second clic retire la marque.
 
+## Installation
+
+1. Télécharger `already-seen-vX.Y.Z.zip` depuis la dernière
+   [release](https://github.com/GuideAuBug73/youtube-AlreadySeen/releases/latest) et le dézipper
+   dans un dossier que vous garderez (Chrome le relit à chaque démarrage).
+2. Ouvrir `chrome://extensions` (ou `brave://extensions`) et activer le **Mode développeur**.
+3. Cliquer sur **Charger l'extension non empaquetée** et choisir le dossier dézippé.
+4. Se connecter à YouTube dans ce navigateur pour que la synchro avec le compte fonctionne.
+
+Mise à jour : remplacer le contenu du dossier par celui de la nouvelle release, puis cliquer sur
+le bouton ↻ de l'extension dans `chrome://extensions`.
+
 ## Ce qui se passe quand on marque une vidéo
 
 1. **Synchro avec le compte YouTube** (activée par défaut). L'extension fait comme
@@ -60,13 +72,9 @@ vignette, la barre YouTube affiche 39 % et 74 % après rechargement.
   sur les pages des jeux. Activé par défaut.
 - Export / import JSON de la liste locale, et effacement.
 
-## Installation (mode développeur)
-
-1. Ouvrir `chrome://extensions` (ou `brave://extensions`).
-2. Activer le **Mode développeur**.
-3. **Charger l'extension non empaquetée** et choisir ce dossier `already-seen`.
-
 ## Organisation du code
+
+L'extension est dans `already-seen/` :
 
 - `src/page.js` : script dans le monde de la page (accès à `ytcfg`, au lecteur et aux cookies du
   compte). Il fait la synchro YouTube et le saut à la fin.
@@ -74,3 +82,17 @@ vignette, la barre YouTube affiche 39 % et 74 % après rechargement.
   marquage automatique. Il parle à `page.js` par des `CustomEvent`.
 - `src/shared.js` : réglages par défaut et accès au stockage, partagés avec la popup.
 - `popup/` : la fenêtre de réglages.
+
+## Publier une version
+
+1. Mettre à jour `version` dans `already-seen/manifest.json` (par exemple `1.1.0`) et committer.
+2. Créer et pousser le tag correspondant :
+
+   ```bash
+   git tag v1.1.0
+   git push origin v1.1.0
+   ```
+
+La GitHub Action `release` vérifie que le tag correspond à la version du manifeste, zippe
+`already-seen/` et publie la release avec le zip.
+
