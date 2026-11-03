@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>AlreadySeen</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="28" height="28">
+    <div>
+      <h1>AlreadySeen</h1>
+      <p id="count">…</p>
+    </div>
+  </header>
+
+  <section>
+    <h2>Synchronisation YouTube</h2>
+    <label><input type="checkbox" data-key="syncYouTube"> <span>Mettre à jour l'historique et la barre rouge de mon compte</span></label>
+    <label><input type="checkbox" data-key="seekOnWatchPage"> <span>Sur la page vidéo, aller à la fin en marquant (au début en retirant la marque)</span></label>
+  </section>
+
+  <section>
+    <h2>Boutons</h2>
+    <label><input type="checkbox" data-key="playerButton"> <span>Dans les contrôles du lecteur</span></label>
+    <label><input type="checkbox" data-key="actionButton"> <span>Sous la vidéo (à côté de Partager)</span></label>
+    <label><input type="checkbox" data-key="thumbButtons"> <span>Sur les vignettes (au survol)</span></label>
+  </section>
+
+  <section>
+    <h2>Automatique</h2>
+    <label><input type="checkbox" data-key="autoMark"> <span>Marquer vue à <input type="number" data-key="autoMarkPercent" min="10" max="100" step="5"> % de la lecture</span></label>
+    <label><input type="checkbox" data-key="useNativeProgress"> <span>Considérer vue si la barre rouge YouTube dépasse <input type="number" data-key="nativeThreshold" min="10" max="100" step="5"> %</span></label>
+  </section>
+
+  <section>
+    <h2>Affichage des vidéos vues</h2>
+    <label><input type="checkbox" data-key="dimWatched"> <span>Assombrir la vignette</span></label>
+    <label><input type="checkbox" data-key="hideWatched"> <span>Masquer des fils (accueil, recherche, suggestions)</span></label>
+  </section>
+
+  <section>
+    <h2>Nettoyage</h2>
+    <label><input type="checkbox" data-key="hideShorts"> <span>Masquer les Shorts (sauf sur les pages Shorts)</span></label>
+    <label><input type="checkbox" data-key="hideMembers"> <span>Masquer les vidéos « Réservé aux membres »</span></label>
+    <label><input type="checkbox" data-key="hidePlayables"> <span>Masquer les « Jeux intégrés YouTube »</span></label>
+  </section>
+
+  <footer>
+    <button id="export" type="button">Exporter</button>
+    <button id="import" type="button">Importer</button>
+    <button id="clear" type="button" class="danger">Tout effacer</button>
+    <input id="file" type="file" accept="application/json,.json" hidden>
+  </footer>
+  <p id="msg" role="status"></p>
+
+  <script src="../src/shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

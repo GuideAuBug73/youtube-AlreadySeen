@@ -1,0 +1,252 @@
+/* ── Thumbnails ─────────────────────────────────────────────────────────── */
+
+.as-host {
+  position: relative;
+}
+
+.as-thumb-btn {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 50;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.8);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.as-thumb-btn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.as-thumb-btn.as-float {
+  position: fixed;
+  z-index: 2147483646;
+  display: none;
+  opacity: 1;
+  transform: none;
+}
+
+.as-host:hover > .as-thumb-btn,
+.as-thumb-btn:focus-visible,
+.as-thumb-btn.as-on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.as-thumb-btn:hover {
+  background: rgba(40, 40, 40, 0.95);
+}
+
+.as-thumb-btn.as-on {
+  background: #1f9d55;
+}
+
+.as-thumb-btn.as-on:hover {
+  background: #c62828;
+}
+
+/* Full red progress bar drawn on videos marked here (YouTube's own one updates on reload). */
+.as-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  z-index: 40;
+  background: #f00;
+  pointer-events: none;
+}
+
+.as-cleared :is(ytd-thumbnail-overlay-resume-playback-renderer, ytw-thumbnail-overlay-resume-playback-renderer, yt-thumbnail-overlay-progress-bar-view-model) {
+  display: none !important;
+}
+
+.as-dim img {
+  opacity: 0.45;
+  transition: opacity 0.15s ease;
+}
+
+.as-dim:hover img {
+  opacity: 1;
+}
+
+.as-hidden {
+  display: none !important;
+}
+
+/* ── Player button ──────────────────────────────────────────────────────── */
+
+.as-player-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.as-player-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+  pointer-events: none;
+}
+
+.as-player-btn.as-on svg {
+  fill: #2ecc71;
+}
+
+/* ── Action-row button (under the video) ────────────────────────────────── */
+
+.as-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  margin-left: 8px;
+  padding: 0 16px 0 12px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1));
+  color: var(--yt-spec-text-primary, #fff);
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.as-action-btn:hover {
+  background: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2));
+}
+
+.as-action-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.as-action-btn.as-on {
+  background: #1f9d55;
+  color: #fff;
+}
+
+/* ── Toast ──────────────────────────────────────────────────────────────── */
+
+#as-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  z-index: 2147483647;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #1f9d55;
+  color: #fff;
+  font: 500 14px/1.4 "Roboto", "Arial", sans-serif;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+#as-toast.as-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+#as-toast[data-kind="warn"] {
+  background: #b26a00;
+}
+
+#as-toast[data-kind="error"] {
+  background: #c62828;
+}
+
+/* ── Progress menu (right click on the player bar or a thumbnail button) ─── */
+
+#as-menu {
+  position: fixed;
+  z-index: 2147483647;
+  min-width: 220px;
+  padding: 6px 0;
+  border-radius: 12px;
+  background: rgba(28, 28, 28, 0.97);
+  color: #fff;
+  font: 14px/1.3 "Roboto", "Arial", sans-serif;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+#as-menu .as-menu-title {
+  padding: 6px 16px 8px;
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#as-menu button {
+  display: block;
+  width: 100%;
+  padding: 9px 16px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+#as-menu button:hover,
+#as-menu button:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+/* ── Hide Shorts (class set on <html> outside Shorts pages) ─────────────── */
+
+html.as-hide-shorts :is(
+  ytd-reel-shelf-renderer,
+  ytd-rich-shelf-renderer[is-shorts],
+  grid-shelf-view-model:has(ytm-shorts-lockup-view-model),
+  ytd-rich-section-renderer:has(ytm-shorts-lockup-view-model, ytd-rich-shelf-renderer[is-shorts]),
+  ytd-rich-item-renderer:has(ytm-shorts-lockup-view-model),
+  ytd-video-renderer:has(a#thumbnail[href^="/shorts/"]),
+  yt-lockup-view-model:has(a[href^="/shorts/"]),
+  ytd-guide-entry-renderer:has(a[title="Shorts"]),
+  ytd-mini-guide-entry-renderer:has(a[title="Shorts"])
+) {
+  display: none !important;
+}
+
+/* ── Hide YouTube Playables (built-in games) ─────────────────────────────── */
+
+html.as-hide-playables :is(
+  ytd-horizontal-card-list-renderer:has(ytd-mini-game-card-view-model, a[href^="/playables"]),
+  ytd-rich-section-renderer:has(ytd-mini-game-card-view-model, a[href^="/playables"]),
+  ytd-rich-item-renderer:has(a[href^="/playables/"]),
+  ytd-mini-game-card-view-model,
+  ytd-guide-entry-renderer:has(a[href^="/playables"]),
+  ytd-mini-guide-entry-renderer:has(a[href^="/playables"])
+) {
+  display: none !important;
+}
+
+/* ── Hide "Members only" videos (cards tagged by content.js) ─────────────── */
+
+html.as-hide-members .as-members {
+  display: none !important;
+}

@@ -1,0 +1,9 @@
+# Reference extension and its archive (third-party, not part of this project)
+youtube-markasseen/
+youtube-markasseen.zip
+
+# Local tooling config
+.mcp.json
+
+# Test screenshots
+already-seen/capture-*.png
