@@ -96,3 +96,7 @@ L'extension est dans `already-seen/` :
 La GitHub Action `release` vérifie que le tag correspond à la version du manifeste, zippe
 `already-seen/` et publie la release avec le zip.
 
+## Licence
+
+[GNU GPL v3.0](LICENSE) : vous pouvez utiliser, modifier et redistribuer l'extension, à condition
+que toute version distribuée reste sous la même licence, avec son code source.

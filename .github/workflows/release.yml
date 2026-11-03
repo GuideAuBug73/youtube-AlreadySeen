@@ -26,6 +26,8 @@ jobs:
         run: |
           cd already-seen
           zip -r "../already-seen-${GITHUB_REF_NAME}.zip" . -x "capture-*.png"
+          cd ..
+          zip "already-seen-${GITHUB_REF_NAME}.zip" LICENSE
 
       - name: Publish the release
         env:
