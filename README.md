@@ -1,102 +1,99 @@
-# AlreadySeen – Marquer comme vu sur YouTube
+# AlreadySeen – Mark as watched on YouTube
 
-Extension Chrome / Brave (Manifest V3) qui ajoute un bouton « Marquer comme vue » :
+**English** | [Français](README.fr.md)
 
-- **dans le lecteur** (contrôles en bas à droite),
-- **sous la vidéo** (bouton « Marquer vue » à côté de Partager),
-- **sur chaque vignette** (au survol, coin haut gauche) : accueil, recherche, chaînes, suggestions, playlists, Shorts.
+Chrome / Brave extension (Manifest V3) that adds a "Mark as watched" button:
 
-Un second clic retire la marque.
+- **in the player** (bottom-right controls),
+- **under the video** (a "Marquer vue" button next to Share),
+- **on every thumbnail** (on hover, top-left corner): home, search, channels, suggestions,
+  playlists, Shorts.
+
+Click again to remove the mark. The extension's interface is in French.
 
 ## Installation
 
-1. Télécharger `already-seen-vX.Y.Z.zip` depuis la dernière
-   [release](https://github.com/GuideAuBug73/youtube-AlreadySeen/releases/latest) et le dézipper
-   dans un dossier que vous garderez (Chrome le relit à chaque démarrage).
-2. Ouvrir `chrome://extensions` (ou `brave://extensions`) et activer le **Mode développeur**.
-3. Cliquer sur **Charger l'extension non empaquetée** et choisir le dossier dézippé.
-4. Se connecter à YouTube dans ce navigateur pour que la synchro avec le compte fonctionne.
+1. Download `already-seen-vX.Y.Z.zip` from the latest
+   [release](https://github.com/GuideAuBug73/youtube-AlreadySeen/releases/latest) and unzip it
+   into a folder you will keep (Chrome reads it again at every start).
+2. Open `chrome://extensions` (or `brave://extensions`) and turn on **Developer mode**.
+3. Click **Load unpacked** and pick the unzipped folder.
+4. Sign in to YouTube in this browser so that syncing with your account works.
 
-Mise à jour : remplacer le contenu du dossier par celui de la nouvelle release, puis cliquer sur
-le bouton ↻ de l'extension dans `chrome://extensions`.
+To update: replace the folder's content with the new release, then click the extension's ↻
+button in `chrome://extensions`.
 
-## Ce qui se passe quand on marque une vidéo
+## What happens when you mark a video
 
-1. **Synchro avec le compte YouTube** (activée par défaut). L'extension fait comme
-   `yt-dlp --mark-watched` : elle récupère les adresses de suivi de lecture de la vidéo
-   (`videostatsPlaybackUrl` / `videostatsWatchtimeUrl`) et signale à YouTube une lecture
-   jusqu'à la fin. La vidéo arrive dans l'historique du compte et la barre rouge passe à 100 %,
-   y compris sur vos autres appareils. Ça marche depuis les vignettes, sans ouvrir la vidéo.
-   Il faut être connecté à YouTube dans le navigateur.
-2. **Sur la page de la vidéo**, le lecteur est aussi mis en pause à la fin de la vidéo, pour que
-   ses propres signaux (envoyés à la pause ou en quittant la page) ne ramènent pas la progression
-   en arrière.
-3. **Stockage local** (`chrome.storage.local`) : la vidéo est retenue pour toujours, ce qui permet
-   d'afficher tout de suite la coche verte et une barre rouge pleine, même avant que YouTube ne
-   rafraîchisse ses vignettes, et même si vous n'êtes pas connecté.
+1. **Sync with your YouTube account** (on by default). The extension does what
+   `yt-dlp --mark-watched` does: it fetches the video's playback tracking URLs
+   (`videostatsPlaybackUrl` / `videostatsWatchtimeUrl`) and tells YouTube the video was played
+   to the end. The video shows up in your account's watch history and the red progress bar goes
+   to 100 %, on your other devices too. This works from thumbnails, without opening the video.
+   You need to be signed in to YouTube in the browser.
+2. **On the video page**, the player is also paused at the end of the video, so that its own
+   signals (sent on pause or when leaving the page) don't move the progress back.
+3. **Local storage** (`chrome.storage.local`): the video is remembered for good, so the green
+   check and a full red bar show up immediately, before YouTube refreshes its thumbnails, and
+   even when you are not signed in.
 
-Retirer la marque (second clic) supprime la vidéo de l'historique du compte, comme le menu
-« Supprimer de l'historique » de youtube.com/feed/history : la barre rouge disparaît aussi.
-L'extension retrouve l'entrée en cherchant le titre dans l'historique. (Renvoyer une
-« position 0 » ne marche pas : YouTube l'ignore une fois la vidéo vue en entier.)
-Si c'est la vidéo en cours de lecture, le lecteur revient au début et se met en pause, sinon
-il la remettrait dans l'historique au prochain signal.
+Removing the mark (second click) deletes the video from your account's watch history, like the
+"Remove from watch history" menu on youtube.com/feed/history: the red bar goes away too. The
+extension finds the entry by searching your history for the video's title. (Sending a
+"position 0" does not work: YouTube ignores it once a video has been watched in full.) If it is
+the video being played, the player goes back to the start and pauses, otherwise it would put
+the video back in the history with its next signal.
 
-Testé le 3 novembre 2026 avec un compte connecté : depuis une vignette (vidéos de 2 min, 18 min
-et 2 h) et depuis le lecteur, la vidéo apparaît dans l'historique avec la barre rouge à 100 %.
+## Set a progress manually (right click)
 
-## Forcer un avancement (clic droit)
+- **On the player's progress bar**: "Sauvegarder l'avancement à mm:ss" (the clicked time) or
+  "Sauvegarder la position actuelle" (current position). The player moves there and pauses.
+- **On a thumbnail's button**: 25 %, 50 %, 75 % or another value (a percentage or a time, for
+  example `40` or `12:30`).
 
-- **Sur la barre de progression du lecteur** : « Sauvegarder l'avancement à mm:ss » (l'endroit
-  cliqué) ou « Sauvegarder la position actuelle ». Le lecteur s'y place et se met en pause.
-- **Sur le bouton d'une vignette** : 25 %, 50 %, 75 % ou une autre valeur (pourcentage ou temps,
-  par exemple `40` ou `12:30`).
+Your account's red bar moves to that position, even below a full watch. A position of just a
+few seconds is ignored by YouTube: to go back to zero, remove the mark instead.
 
-La barre rouge du compte passe à cette position, y compris en dessous d'une lecture complète.
-Une position de quelques secondes seulement est ignorée par YouTube : pour revenir à zéro, il
-faut retirer la marque. Testé le 3 novembre 2026 : 40 % depuis le lecteur, 75 % depuis une
-vignette, la barre YouTube affiche 39 % et 74 % après rechargement.
+## Options (extension icon)
 
-## Options (icône de l'extension)
+- YouTube account sync, and jump to the end (or to the start when unmarking) on the video page.
+- Show or hide each of the three buttons.
+- Mark automatically at X % of playback (90 % by default).
+- Treat videos that YouTube already shows with a red bar ≥ X % as watched.
+- Dim watched thumbnails, or hide them from feeds (never inside a playlist).
+- Hide Shorts (shelves, cards and menu entry; never on Shorts pages or a channel's Shorts tab).
+  On by default.
+- Hide "Members only" videos. The badge is recognised by its star icon, whatever YouTube's
+  language. Off by default.
+- Hide "YouTube Playables" (built-in games): shelves, cards and menu entry, except on the games'
+  own pages. On by default.
+- JSON export / import of the local list, and clearing it.
 
-- Synchro compte YouTube, et saut à la fin (ou au début au retrait) sur la page vidéo.
-- Afficher ou non chacun des trois boutons.
-- Marquage automatique à X % de la lecture (90 % par défaut).
-- Considérer comme vues les vidéos que YouTube affiche déjà avec une barre rouge ≥ X %.
-- Assombrir les vignettes vues, ou les masquer des fils (jamais dans une playlist).
-- Masquer les Shorts (étagères, cartes et entrée de menu ; jamais sur les pages Shorts ni sur
-  l'onglet Shorts d'une chaîne). Activé par défaut, comme dans l'extension de référence.
-- Masquer les vidéos « Réservé aux membres ». Le badge est reconnu par son icône étoile, donc
-  quelle que soit la langue de YouTube. Désactivé par défaut.
-- Masquer les « Jeux intégrés YouTube » (Playables) : étagères, cartes et entrée de menu, sauf
-  sur les pages des jeux. Activé par défaut.
-- Export / import JSON de la liste locale, et effacement.
+## Code layout
 
-## Organisation du code
+The extension lives in `already-seen/`:
 
-L'extension est dans `already-seen/` :
+- `src/page.js`: script running in the page's own world (access to `ytcfg`, the player and the
+  account cookies). It handles YouTube sync and moving the player.
+- `src/content.js`: interface (buttons, bar, dimming, hiding), local list, automatic marking.
+  It talks to `page.js` through `CustomEvent`s.
+- `src/shared.js`: default settings and storage access, shared with the popup.
+- `popup/`: the settings window.
 
-- `src/page.js` : script dans le monde de la page (accès à `ytcfg`, au lecteur et aux cookies du
-  compte). Il fait la synchro YouTube et le saut à la fin.
-- `src/content.js` : interface (boutons, barre, assombrissement, masquage), liste locale,
-  marquage automatique. Il parle à `page.js` par des `CustomEvent`.
-- `src/shared.js` : réglages par défaut et accès au stockage, partagés avec la popup.
-- `popup/` : la fenêtre de réglages.
+## Publishing a version
 
-## Publier une version
-
-1. Mettre à jour `version` dans `already-seen/manifest.json` (par exemple `1.1.0`) et committer.
-2. Créer et pousser le tag correspondant :
+1. Update `version` in `already-seen/manifest.json` (for example `1.1.0`) and commit.
+2. Create and push the matching tag:
 
    ```bash
    git tag v1.1.0
    git push origin v1.1.0
    ```
 
-La GitHub Action `release` vérifie que le tag correspond à la version du manifeste, zippe
-`already-seen/` et publie la release avec le zip.
+The `release` GitHub Action checks that the tag matches the manifest version, zips
+`already-seen/` together with the licence, and publishes the release with the zip.
 
 ## Licence
 
-[GNU GPL v3.0](LICENSE) : vous pouvez utiliser, modifier et redistribuer l'extension, à condition
-que toute version distribuée reste sous la même licence, avec son code source.
+[GNU GPL v3.0](LICENSE): you may use, modify and redistribute the extension, as long as any
+distributed version stays under the same licence, with its source code.
